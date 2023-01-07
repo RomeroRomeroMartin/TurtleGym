@@ -32,7 +32,7 @@ for i in range(eps):
 
         # choose a random action
         action = random.randint(0, 2)
-
+        
         # take the action and get the information from the environment
         new_state, reward, done, info = env.step(action)
 
@@ -51,6 +51,7 @@ print(Q[:len(visited_states),:])
 
 #Using Q table obtained after all episodes
 s=env.reset()
+print(s)
 OldStrState=''.join(s)
 if OldStrState not in visited_states: visited_states.append(OldStrState)
 OldState=visited_states.index(OldStrState)

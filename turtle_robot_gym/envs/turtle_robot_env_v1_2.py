@@ -2,7 +2,7 @@ import gym
 import numpy as np
 from gym.spaces import Discrete,MultiDiscrete
 
-class TurtleRobotEnv_v1(gym.Env):
+class TurtleRobotEnv_v1_2(gym.Env):
 	
 	def __init__(self, **kwargs):
 		super().__init__()
@@ -34,33 +34,36 @@ class TurtleRobotEnv_v1(gym.Env):
 			
 	def get_sensor_readings(self):	
 		self.right = (self.theta == 0 and self.y + 1 <= self.max_y and (self.x,self.y+1) not in self.walls) or (self.theta == 1 and self.x + 1 <= self.max_x and (self.x+1,self.y) not in self.walls) or (self.theta == 2 and self.y - 1 >= 0 and (self.x,self.y-1) not in self.walls) or (self.theta == 3 and self.x - 1 >= 0 and (self.x-1,self.y) not in self.walls)
-		
+		self.right=1 if self.right==True else 0
 		self.front = (self.theta == 0 and self.x - 1 >= 0 and (self.x-1,self.y) not in self.walls) or (self.theta == 1 and self.y + 1 <= self.max_y and (self.x,self.y+1) not in self.walls) or (self.theta == 2 and self.x + 1 <= self.max_x and (self.x+1,self.y) not in self.walls) or (self.theta == 3 and self.y - 1 >= 0 and (self.x,self.y-1) not in self.walls) 
-		
+		self.front=1 if self.front==True else 0
 		self.left = (self.theta == 0 and self.y - 1 >= 0 and (self.x,self.y-1) not in self.walls) or (self.theta == 1 and self.x - 1 >= 0 and (self.x-1,self.y) not in self.walls) or (self.theta == 2 and self.y + 1 <= self.max_y and (self.x,self.y+1) not in self.walls) or (self.theta == 3 and self.x + 1 <= self.max_x and (self.x+1,self.y) not in self.walls)
-		
+		self.left=1 if self.left==True else 0
 
 		self.rel_goal = ''
 		if self.x < self.goal[0]:
 			# North
 			self.rel_goal = 'South'
+			self.rel_goal=10
 		elif self.x > self.goal[0]:
 			# South
 			self.rel_goal = 'North'
+			self.rel_goal=20
 		elif self.x == self.goal[0]:
 			# Equal
 			self.rel_goal = 'Equal'
+			self.rel_goal=30
 		if self.y < self.goal[1]:
 			# East
-			self.rel_goal = self.rel_goal + '-East'
-			
+			#self.rel_goal = self.rel_goal + '-East'
+			self.rel_goal+=1
 		elif self.y > self.goal[1]:
 			# West
-			self.rel_goal = self.rel_goal + '-West'
-			
+			#self.rel_goal = self.rel_goal + '-West'
+			self.rel_goal+=2
 		elif self.y == self.goal[1]:
-			self.rel_goal = self.rel_goal + '-Equal'
-			
+			#self.rel_goal = self.rel_goal + '-Equal'
+			self.rel_goal+=3
 			
 		self.distance = abs(self.x - self.goal[0]) + abs(self.y - self.goal[1])
 		
