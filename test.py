@@ -38,7 +38,7 @@ setup = { 'width': 3,
 env = gym.make('TurtleRobotEnv-v1_2', **setup)
 
 state=env.reset()
-model=load_model('3407model_weights.h5')
+model=load_model('100model_weights.h5')
 done=False
 while not done:
     state=preprocess(state)
