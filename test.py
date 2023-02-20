@@ -5,27 +5,12 @@ import tensorflow as tf
 import random
 from collections import deque
 from tensorflow.keras.models import load_model
+from keras import Sequential
+from keras.layers import Input, Flatten, Dense
+from rl.memory import SequentialMemory
+from rl.policy import LinearAnnealedPolicy, EpsGreedyQPolicy
+from rl.agents.dqn import DQNAgent
 
-def preprocess(state):
-    return np.reshape(state, [1,5])
-
-def one_hot_encode(value, values):
-    # create a list of zeros with the same length as the list of values
-    one_hot = [0] * len(values)
-    # set the element at the index of the value to 1
-    if value in values:
-        one_hot[values.index(value)] = 1
-    return one_hot
-# define a function to preprocess the state
-def preprocess_state(state):
-    # encode the first, second, and third components as integers
-    encoded_state = [int(state[0]), int(state[1]), int(state[2])]
-    # encode the fourth component as a one-hot vector
-    encoded_state += one_hot_encode(str(state[3]), ['11', '12', '13', '21', '22', '23', '31', '32', '33'])    # encode the last component as a float
-    encoded_state += [float(state[4])]
-    return encoded_state
-def loss(y_true, y_pred):
-    return tf.reduce_mean(tf.square(y_true - y_pred))
 
 setup = { 'width': 3,
         'height': 3,
@@ -37,13 +22,42 @@ setup = { 'width': 3,
 
 env = gym.make('TurtleRobotEnv-v1_2', **setup)
 
+model = Sequential()
+#Input is 1 observation vector, and the number of observations in that vector 
+model.add(Input(shape=(1,5)))  
+model.add(Flatten())
+#Hidden layers with 24 nodes each
+model.add(Dense(24, activation='relu'))
+model.add(Dense(24, activation='relu'))
+#Output is the number of actions in the action space
+model.add(Dense(env.action_space.n, activation='linear')) 
+
+memory = SequentialMemory(limit=50000, window_length=1)
+
+# setup the Linear annealed policy with the EpsGreedyQPolicy as the inner policy
+policy =  LinearAnnealedPolicy(inner_policy=  EpsGreedyQPolicy(),   # policy used to select actions
+                               attr='eps',                          # attribute in the inner policy to vary             
+                               value_max=1.0,                       # maximum value of attribute that is varying
+                               value_min=0.1,                       # minimum value of attribute that is varying
+                               value_test=0.05,                     # test if the value selected is < 0.05
+                               nb_steps=10000)  
+dqn = DQNAgent(model=model,                     # Q-Network model
+               nb_actions=env.action_space.n,   # number of actions
+               memory=memory,                   # experience replay memory
+               nb_steps_warmup=25,              # how many steps are waited before starting experience replay
+               target_model_update=1e-2,        # how often the target network is updated
+               policy=policy) 
+dqn.compile(tf.keras.optimizers.Adam(learning_rate=1e-3), metrics=['mae','accuracy'])
+
+dqn.load_weights('dqn__turtle_weights.h5')
+
+
+
 state=env.reset()
-model=load_model('100model_weights.h5')
 done=False
 while not done:
-    state=preprocess(state)
-    action=model.predict(state)
-    action=np.random.choice((np.argwhere(action == np.amax(action))).flatten())
+    action=dqn.forward(state)
     new_state, reward, done, info = env.step(action)
     env.render(action=action, reward=reward)
     state=new_state
+

@@ -1,36 +1,27 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import random
+import pickle
 
-f = open('epsilon.txt')
+f = open('AccionesQLeaning.txt','r')
 lineas = f.read()
 
-datos=lineas.split(',')
+datos=eval(lineas)
 
-ent=[]
-x=[]
-for i in range(len(datos)):
-    ent.append(float(datos[i]))
-    x.append(i)
+x=[i for i in range(len(datos))]
 
-
-plt.plot(x,ent)
+plt.plot(x,datos)
 plt.grid()
 plt.show()
 
 
-f = open('ticks.txt')
+
+f = open('AccionesDQN.txt','r')
 lineas = f.read()
 
-datos=lineas.split(',')
+datos=eval(lineas)
+x=[i for i in range(len(datos))]
 
-ent=[]
-x=[]
-for i in range(len(datos)):
-    ent.append(float(datos[i]))
-    x.append(i)
-
-
-plt.plot(x,ent)
+plt.plot(x,datos)
 plt.grid()
 plt.show()
