@@ -51,7 +51,7 @@ s = list(map(str, s))
 OldStrState=''.join(s)
 if OldStrState not in visited_states: visited_states.append(OldStrState)
 OldState=visited_states.index(OldStrState)
-
+print('STATEEEE',Q[OldState])
 done=False
 while not done:
 
