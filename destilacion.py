@@ -17,8 +17,10 @@ def Kulback_Leibler_loss(y_true,y_pred):
 
     e_x = tf.exp(y_pred - tf.reduce_max(y_pred))
     softmax2=e_x / tf.reduce_sum(e_x,keepdims=True)
-    if softmax2<10e-7:
-        softmax2=0.00001
+
+    epsilon = 1e-15  # valor para reemplazar los valores de softmax2 menores a este límite
+    softmax2 = tf.where(softmax2 < epsilon, epsilon, softmax2)  # reemplaza los valores menores a epsilon
+
     return tf.reduce_sum(softmax1*tf.math.log(softmax1/softmax2))
 
 #Laberintos 3x3 y 4x4
@@ -43,7 +45,7 @@ model.add(Dense(48, activation='relu'))
 model.add(Dense(4, activation='linear')) 
 
 # Compile the distilled model with KL divergence loss
-model.compile(optimizer='adam', loss=Kulback_Leibler_loss)
+model.compile(optimizer='adam', loss='mse')
 
 # Load the dataset of states and action probabilities
 estados=[]
