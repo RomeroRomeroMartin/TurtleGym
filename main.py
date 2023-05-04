@@ -42,7 +42,6 @@ setup = { 'width': 3,
 
 env = gym.make('TurtleRobotEnv-v1_2', **setup)
 
-estado_str = list(map(str, env.reset()))
 
 
 def choose_action(epsilon,state):
