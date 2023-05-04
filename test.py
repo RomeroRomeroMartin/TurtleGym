@@ -19,23 +19,23 @@ from rl.agents.dqn import DQNAgent
         'start': (0,0),
         'goal': (1,2),
         'theta': 0
-        }''' 
+        } '''
 #Laberinto 4x4
-'''setup = { 'width': 4,
+setup = { 'width': 4,
         'height': 4,
         'walls': [(1,1),(2,0),(2,1),(3,1),(3,3)],
         'start': (0,0),
         'goal': (2,3),
         'theta': 0
-        }'''
+        }
 #Laberinto 5x5
-setup = { 'width': 5,
+'''setup = { 'width': 5,
         'height': 5,
         'walls': [(1,1),(3,0),(2,2),(2,3),(3,1),(4,2)],
         'start': (0,0),
         'goal': (3,2),
         'theta': 0
-        }   
+        } '''  
 #Laberinto 6x6
 '''setup = { 'width': 6,
         'height': 6,
@@ -47,7 +47,17 @@ setup = { 'width': 5,
 
 env = gym.make('TurtleRobotEnv-v1_2', **setup)
 
-
+#####LABERINTOS 3X3 Y 4X4  de 3 CAPAS DE 64
+model = Sequential()
+#Input is 1 observation vector, and the number of observations in that vector 
+model.add(Input(shape=(1,5)))  
+model.add(Flatten())
+#Hidden layers with 24 nodes each
+model.add(Dense(64, activation='relu'))
+model.add(Dense(64, activation='relu'))
+model.add(Dense(64, activation='relu'))
+#Output is the number of actions in the action space
+model.add(Dense(env.action_space.n, activation='linear'))
 #####LABERINTOS 3X3 Y 4X4
 '''model = Sequential()
 #Input is 1 observation vector, and the number of observations in that vector 
@@ -60,7 +70,7 @@ model.add(Dense(24, activation='relu'))
 model.add(Dense(env.action_space.n, activation='linear'))'''
 
 #######LABERINTO 5X5 Y 6X6
-model = Sequential()
+'''model = Sequential()
 #Input is 1 observation vector, and the number of observations in that vector 
 model.add(Input(shape=(1,5)))  
 model.add(Flatten())
@@ -69,7 +79,7 @@ model.add(Dense(96, activation='relu'))
 model.add(Dense(192, activation='relu'))
 model.add(Dense(96, activation='relu'))
 #Output is the number of actions in the action space
-model.add(Dense(env.action_space.n, activation='linear')) 
+model.add(Dense(env.action_space.n, activation='linear')) '''
 
 memory = SequentialMemory(limit=50000, window_length=1)
 
@@ -88,7 +98,7 @@ dqn = DQNAgent(model=model,                     # Q-Network model
                policy=policy) 
 dqn.compile(tf.keras.optimizers.Adam(learning_rate=1e-3), metrics=['mae','accuracy'])
 
-dqn.load_weights('models/5x5_turtle_weights.h5')
+dqn.load_weights('models/4x4_turtle_weights64x3.h5')
 
 
 
@@ -107,7 +117,7 @@ for i in range(500):
         #print(np.reshape(state,(1,5)))
         #print(predicciones)
         f2.write(str(predicciones[0])+' '+str(predicciones[1])+' '+str(predicciones[2])+' '+str(predicciones[3])+'\n')
-        print(type(predicciones))
+        #print(type(predicciones))
         new_state, reward, done, info = env.step(action)
         #env.render(action=action, reward=reward)
         state=new_state

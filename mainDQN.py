@@ -9,7 +9,7 @@ from rl.agents.dqn import DQNAgent
 from rl.policy import LinearAnnealedPolicy, EpsGreedyQPolicy
 import tensorflow as tf
 #from tensorflow.keras.optimizers import Adam
-laberinto='6x6'
+laberinto='4x4'
 
 if laberinto=='3x3':
     #Laberinto 3x3
@@ -84,8 +84,9 @@ if laberinto=='3x3' or laberinto=='4x4':
     model.add(Input(shape=(1,5)))  
     model.add(Flatten())
     #Hidden layers with 24 nodes each
-    model.add(Dense(24, activation='relu'))                             
-    model.add(Dense(24, activation='relu'))    
+    model.add(Dense(64, activation='relu'))                             
+    model.add(Dense(64, activation='relu')) 
+    model.add(Dense(64, activation='relu'))    
     model.add(Dense(env.action_space.n, activation='linear')) 
 
 for i in range(30):
@@ -104,14 +105,14 @@ for i in range(30):
 
     dqn.compile(tf.keras.optimizers.Adam(learning_rate=1e-3), metrics=['mae','accuracy'])
     #Finally fit and train the agent
-    history = dqn.fit(env,nb_steps=95000, visualize=False, verbose=1)
+    history = dqn.fit(env,nb_steps=35000, visualize=False, verbose=1)
 
-    f=open('data/AccionesDQN.txt','a')
+    '''f=open('data/AccionesDQN.txt','a')
     f.write(str(history.history['nb_episode_steps']))
     f.write('\n')
-    f.close()
+    f.close()'''
     # Finally, evaluate and test our algorithm for 20 episodes.
-    #dqn.test(env, nb_episodes=20, visualize=False)
+    dqn.test(env, nb_episodes=20, visualize=False)
 
     # Save weights
-    #model.save_weights(laberinto+'_turtle_weights.h5')
+    model.save_weights('models/'+laberinto+'_turtle_weights64x3.h5')

@@ -18,7 +18,7 @@ def Kulback_Leibler_loss(y_true,y_pred):
     e_x = tf.exp(y_pred - tf.reduce_max(y_pred))
     softmax2=e_x / tf.reduce_sum(e_x,keepdims=True)
 
-    epsilon = 1e-15  # valor para reemplazar los valores de softmax2 menores a este límite
+    epsilon = 1e-17  # valor para reemplazar los valores de softmax2 menores a este límite
     softmax2 = tf.where(softmax2 < epsilon, epsilon, softmax2)  # reemplaza los valores menores a epsilon
 
     return tf.reduce_sum(softmax1*tf.math.log(softmax1/softmax2))
@@ -31,7 +31,7 @@ model.add(Flatten())
 #Hidden layers with 24 nodes each
 model.add(Dense(12, activation='relu'))                             
 model.add(Dense(12, activation='relu'))
-model.add(Dense(4, activation='linear')) '''
+model.add(Dense(4, activation='linear'))''' 
 
 #Laberintos 5x5 y 6x6
 model = keras.Sequential()
@@ -39,17 +39,17 @@ model = keras.Sequential()
 model.add(Input(shape=(1,5)))  
 model.add(Flatten())
 #Hidden layers with 24 nodes each
-model.add(Dense(48, activation='relu'))                             
-model.add(Dense(92, activation='relu'))
-model.add(Dense(48, activation='relu'))
+model.add(Dense(24, activation='relu'))                             
+#model.add(Dense(92, activation='relu'))
+model.add(Dense(24, activation='relu'))
 model.add(Dense(4, activation='linear')) 
 
 # Compile the distilled model with KL divergence loss
-model.compile(optimizer='adam', loss='mse')
+model.compile(optimizer='adam', loss=Kulback_Leibler_loss)
 
 # Load the dataset of states and action probabilities
 estados=[]
-f1=open('data/InputsDestilacion5x5.txt','r')
+f1=open('data/InputsDestilacion6x6.txt','r')
 lineas=f1.readlines()
 for linea in lineas:
     l=np.array([])
@@ -67,7 +67,7 @@ estados=np.array(estados)
 f1.close()
 
 
-f2=open('data/OutputsDestilacion5x5.txt','r')
+f2=open('data/OutputsDestilacion6x6.txt','r')
 predicciones=[]
 lineas=f2.readlines()
 for linea in lineas:
@@ -88,4 +88,4 @@ f2.close()
 model.fit(estados, predicciones,verbose=1,epochs=500)
 
 # Save the distilled model weights
-model.save('models/5x5distilled_weights.h5')
+model.save('models/6x6distilled_weights_24x2.h5')
