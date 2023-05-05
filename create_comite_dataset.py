@@ -93,7 +93,7 @@ env = gym.make('TurtleRobotEnv-v1_2', **setup)
 def get_prediction(state,list_dqn,list_qlear):
     state_qlear= list(map(str, state))
     state_qlear=''.join(state_qlear)
-    final_prediction=[0,0,0]
+    final_prediction=[0,0,0,0]
     for i in range(len(list_dqn)):
         dqn_prediction=list_dqn[i].compute_q_values(np.reshape(state,(1,5)))
         normalized_dqn_predictions = [(x - min(dqn_prediction)) / (max(dqn_prediction) - min(dqn_prediction)) for x in dqn_prediction]
@@ -123,7 +123,7 @@ modeldqn=create_dqn([12,12],'models/3x3distilled_weights.h5').create_agent()
 list_dqn.append(modeldqn)
 
 #CREAMOS Q-LEARNING
-with open('data/Qlear3x3.pkl', 'rb') as f:
+with open('models/Qlear3x3.pkl', 'rb') as f:
     qlear = pickle.load(f)
 
 list_qlear.append(qlear)
@@ -132,17 +132,19 @@ list_qlear.append(qlear)
 f1=open('data/estados.txt','w')
 f2=open('data/predicciones.txt','w')
 contador=0
-OldState=env.reset()
-done=False
-while not done:
+for i in range(500):
+    OldState=env.reset()
+    done=False
+    while not done:
 
-    predictions= get_prediction(OldState,list_dqn,list_qlear)
-    f1.write(str(OldState[0])+' '+str(OldState[1])+' '+str(OldState[2])+' '+str(OldState[3])+' '+str(OldState[4])+' '+'\n')
-    f2.write(str(predictions[0])+' '+str(predictions[1])+' '+str(predictions[2])+' '+str(predictions[3])+'\n')
-    action=np.argmax(predictions)
-    new_state, reward, done, info = env.step(action)
-    OldState=new_state
-    env.render(action=action, reward=reward)
+        predictions= get_prediction(OldState,list_dqn,list_qlear)
+        f1.write(str(OldState[0])+' '+str(OldState[1])+' '+str(OldState[2])+' '+str(OldState[3])+' '+str(OldState[4])+' '+'\n')
+        f2.write(str(predictions[0])+' '+str(predictions[1])+' '+str(predictions[2])+' '+str(predictions[3])+'\n')
+        action=np.argmax(predictions)
+        new_state, reward, done, info = env.step(action)
+        OldState=new_state
+        #env.render(action=action, reward=reward)
+        contador+=1
 
 print(contador)
 f1.close()

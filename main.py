@@ -107,7 +107,7 @@ plt.show()'''
 print(Q[:len(visited_states),:])
 print(visited_states)
 data=[Q[:len(visited_states),:], visited_states]
-with open('data/Qlear3x3.pkl', 'wb') as f:
+with open('models/Qlear3x3.pkl', 'wb') as f:
     pickle.dump(data, f)
 
 #Using Q table obtained after all episodes

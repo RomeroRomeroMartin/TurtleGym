@@ -40,7 +40,7 @@ setup = { 'width': 3,
 
 env = gym.make('TurtleRobotEnv-v1_2', **setup)
 
-with open('data/Qlear3x3.pkl', 'rb') as f:
+with open('models/Qlear3x3.pkl', 'rb') as f:
     data = pickle.load(f)
 Q, visited_states = data
 print(Q)

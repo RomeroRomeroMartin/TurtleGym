@@ -14,21 +14,21 @@ import keras
 
 
 #Laberinto 3x3
-'''setup = { 'width': 3,
+setup = { 'width': 3,
         'height': 3,
         'walls': [(1,1),(0,2)],
         'start': (0,0),
         'goal': (1,2),
         'theta': 0
-        } '''
+        } 
 #Laberinto 4x4
-setup = { 'width': 4,
+'''setup = { 'width': 4,
         'height': 4,
         'walls': [(1,1),(2,0),(2,1),(3,1),(3,3)],
         'start': (0,0),
         'goal': (2,3),
         'theta': 0
-        }
+        }'''
 #Laberinto 5x5
 '''setup = { 'width': 5,
         'height': 5,
@@ -82,7 +82,7 @@ model.add(Dense(92, activation='relu'))
 model.add(Dense(48, activation='relu'))
 model.add(Dense(4, activation='linear')) '''
 
-model=keras.models.load_model('models/4x4distilled_weights.h5',compile=False)
+model=keras.models.load_model('models/3x3comite_weights_12x2.h5',compile=False)
 
 
 state=env.reset()
