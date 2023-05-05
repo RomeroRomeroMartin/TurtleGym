@@ -8,13 +8,13 @@ import pickle
 # create the turtle environment
 
 #Laberinto 3x3
-setup = { 'width': 3,
+'''setup = { 'width': 3,
         'height': 3,
         'walls': [(1,1),(0,2)],
         'start': (0,0),
         'goal': (1,2),
         'theta': 0
-        } 
+        }''' 
 #Laberinto 4x4
 '''setup = { 'width': 4,
         'height': 4,
@@ -22,7 +22,7 @@ setup = { 'width': 3,
         'start': (0,0),
         'goal': (2,3),
         'theta': 0
-        } '''
+        }''' 
 #Laberinto 5x5
 '''setup = { 'width': 5,
         'height': 5,
@@ -32,13 +32,13 @@ setup = { 'width': 3,
         'theta': 0
         }''' 
 #Laberinto 6x6
-'''setup = { 'width': 6,
+setup = { 'width': 6,
         'height': 6,
         'walls': [(1,1),(0,5),(1,2),(1,3),(3,3),(2,4),(2,5),(5,4)],
         'start': (0,0),
         'goal': (5,5),
         'theta': 0
-        }'''
+        }
 
 env = gym.make('TurtleRobotEnv-v1_2', **setup)
 
@@ -107,7 +107,7 @@ plt.show()'''
 print(Q[:len(visited_states),:])
 print(visited_states)
 data=[Q[:len(visited_states),:], visited_states]
-with open('models/Qlear3x3.pkl', 'wb') as f:
+with open('models/Qlear6x6.pkl', 'wb') as f:
     pickle.dump(data, f)
 
 #Using Q table obtained after all episodes
