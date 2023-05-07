@@ -55,13 +55,13 @@ class create_dqn():
         return dqn
 
 #Laberinto 3x3
-setup = { 'width': 3,
+'''setup = { 'width': 3,
         'height': 3,
         'walls': [(1,1),(0,2)],
         'start': (0,0),
         'goal': (1,2),
         'theta': 0
-        } 
+        }''' 
 #Laberinto 4x4
 '''setup = { 'width': 4,
         'height': 4,
@@ -71,13 +71,13 @@ setup = { 'width': 3,
         'theta': 0
         } '''
 #Laberinto 5x5
-'''setup = { 'width': 5,
+setup = { 'width': 5,
         'height': 5,
         'walls': [(1,1),(3,0),(2,2),(2,3),(3,1),(4,2)],
         'start': (0,0),
         'goal': (3,2),
         'theta': 0
-        }''' 
+        } 
 #Laberinto 6x6
 '''setup = { 'width': 6,
         'height': 6,
@@ -103,9 +103,12 @@ def get_prediction(state,list_dqn,list_qlear):
     for i in range(len(list_qlear)):
         Q=list_qlear[i][0]
         visited_states=list_qlear[i][1]
-        indice=visited_states.index(state_qlear)
-        qlear_prediction=Q[indice]
-        normalized_qlear_predictions=[(x - min(qlear_prediction)) / (max(qlear_prediction) - min(qlear_prediction)) for x in qlear_prediction]
+        if state_qlear not in visited_states:
+            normalized_qlear_predictions=[0,0,0,0]
+        else:
+            indice=visited_states.index(state_qlear)
+            qlear_prediction=Q[indice]
+            normalized_qlear_predictions=[(x - min(qlear_prediction)) / (max(qlear_prediction) - min(qlear_prediction)) for x in qlear_prediction]
         for i in range(len(final_prediction)-1):
             final_prediction[i]+=normalized_qlear_predictions[i]
     
@@ -117,13 +120,13 @@ list_qlear=[]
 list_dqn=[]
 
 #CREAMOS DQN
-modeldqn=create_dqn([24,24],'models/3x3_turtle_weights.h5').create_agent()
+modeldqn=create_dqn([96,192,96],'models/6x6_turtle_weights_96-192-96.h5').create_agent()
 list_dqn.append(modeldqn)
-modeldqn=create_dqn([12,12],'models/3x3distilled_weights.h5').create_agent()
+modeldqn=create_dqn([96,192,96],'models/6x6_turtle_weights.h5').create_agent()
 list_dqn.append(modeldqn)
 
 #CREAMOS Q-LEARNING
-with open('models/Qlear3x3.pkl', 'rb') as f:
+with open('models/Qlear6x6.pkl', 'rb') as f:
     qlear = pickle.load(f)
 
 list_qlear.append(qlear)
@@ -143,8 +146,10 @@ for i in range(500):
         action=np.argmax(predictions)
         new_state, reward, done, info = env.step(action)
         OldState=new_state
-        #env.render(action=action, reward=reward)
+        env.render(action=action, reward=reward)
         contador+=1
+        if reward==10:
+            print('AAAAAAAAAAA')
 
 print(contador)
 f1.close()

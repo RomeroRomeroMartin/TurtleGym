@@ -6,13 +6,13 @@ import pickle
 
 
 #Laberinto 3x3
-setup = { 'width': 3,
+'''setup = { 'width': 3,
         'height': 3,
         'walls': [(1,1),(0,2)],
         'start': (0,0),
         'goal': (1,2),
         'theta': 0
-        } 
+        } '''
 #Laberinto 4x4
 '''setup = { 'width': 4,
         'height': 4,
@@ -30,17 +30,17 @@ setup = { 'width': 3,
         'theta': 0
         }''' 
 #Laberinto 6x6
-'''setup = { 'width': 6,
+setup = { 'width': 6,
         'height': 6,
         'walls': [(1,1),(0,5),(1,2),(1,3),(3,3),(2,4),(2,5),(5,4)],
         'start': (0,0),
         'goal': (5,5),
         'theta': 0
-        }'''
+        }
 
 env = gym.make('TurtleRobotEnv-v1_2', **setup)
 
-with open('models/Qlear3x3.pkl', 'rb') as f:
+with open('models/Qlear6x6.pkl', 'rb') as f:
     data = pickle.load(f)
 Q, visited_states = data
 print(Q)
@@ -53,6 +53,7 @@ if OldStrState not in visited_states: visited_states.append(OldStrState)
 OldState=visited_states.index(OldStrState)
 print('STATEEEE',Q[OldState])
 done=False
+contador=0
 while not done:
 
     action = np.random.choice((np.argwhere(Q[OldState,:] == np.amax(Q[OldState,:]))).flatten())
@@ -63,3 +64,5 @@ while not done:
     NewState=visited_states.index(StrState)
     OldState=NewState
     env.render(action=action, reward=reward)
+    contador+=1
+print(contador)

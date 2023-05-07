@@ -55,7 +55,7 @@ for i in range(1):
     Q = np.zeros([288, 3])
     lr = 0.15
     y = 0.99
-    eps = 500
+    eps = 1000
     visited_states=[]
     list_acciones=[]
     print(i)
@@ -118,6 +118,7 @@ if OldStrState not in visited_states: visited_states.append(OldStrState)
 OldState=visited_states.index(OldStrState)
 
 done=False
+contador=1
 while not done:
 
     action = np.random.choice((np.argwhere(Q[OldState,:] == np.amax(Q[OldState,:]))).flatten())
@@ -128,3 +129,5 @@ while not done:
     NewState=visited_states.index(StrState)
     OldState=NewState
     env.render(action=action, reward=reward)
+    contador+=1
+print(contador)

@@ -49,7 +49,7 @@ model.compile(optimizer='adam', loss=Kulback_Leibler_loss)
 
 # Load the dataset of states and action probabilities
 estados=[]
-f1=open('data/InputsComite3x3.txt','r')
+f1=open('data/InputsComite4x4.txt','r')
 lineas=f1.readlines()
 for linea in lineas:
     l=np.array([])
@@ -67,7 +67,7 @@ estados=np.array(estados)
 f1.close()
 
 
-f2=open('data/OutputsComite3x3.txt','r')
+f2=open('data/OutputsComite4x4.txt','r')
 predicciones=[]
 lineas=f2.readlines()
 for linea in lineas:
@@ -88,4 +88,4 @@ f2.close()
 model.fit(estados, predicciones,verbose=1,epochs=500)
 
 # Save the distilled model weights
-model.save('models/3x3comite_weights_12x2.h5')
+model.save('models/4x4comite_weights_12x2.h5')

@@ -9,7 +9,7 @@ from rl.agents.dqn import DQNAgent
 from rl.policy import LinearAnnealedPolicy, EpsGreedyQPolicy
 import tensorflow as tf
 #from tensorflow.keras.optimizers import Adam
-laberinto='4x4'
+laberinto='6x6'
 
 if laberinto=='3x3':
     #Laberinto 3x3
@@ -89,7 +89,7 @@ if laberinto=='3x3' or laberinto=='4x4':
     model.add(Dense(64, activation='relu'))    
     model.add(Dense(env.action_space.n, activation='linear')) 
 
-for i in range(30):
+for i in range(1):
     #Feed-Forward Neural Network Architecture Summary
     print(model.summary())
     #Defining DQN Agent for DQN Model
@@ -105,7 +105,7 @@ for i in range(30):
 
     dqn.compile(tf.keras.optimizers.Adam(learning_rate=1e-3), metrics=['mae','accuracy'])
     #Finally fit and train the agent
-    history = dqn.fit(env,nb_steps=35000, visualize=False, verbose=1)
+    history = dqn.fit(env,nb_steps=95000, visualize=False, verbose=1)
 
     '''f=open('data/AccionesDQN.txt','a')
     f.write(str(history.history['nb_episode_steps']))
@@ -115,4 +115,4 @@ for i in range(30):
     dqn.test(env, nb_episodes=20, visualize=False)
 
     # Save weights
-    model.save_weights('models/'+laberinto+'_turtle_weights64x3.h5')
+    model.save_weights('models/'+laberinto+'_turtle_weights.h5')

@@ -14,13 +14,13 @@ import keras
 
 
 #Laberinto 3x3
-setup = { 'width': 3,
+'''setup = { 'width': 3,
         'height': 3,
         'walls': [(1,1),(0,2)],
         'start': (0,0),
         'goal': (1,2),
         'theta': 0
-        } 
+        } '''
 #Laberinto 4x4
 '''setup = { 'width': 4,
         'height': 4,
@@ -38,19 +38,19 @@ setup = { 'width': 3,
         'theta': 0
         }'''
 #Laberinto 6x6
-'''setup = { 'width': 6,
+setup = { 'width': 6,
         'height': 6,
         'walls': [(1,1),(0,5),(1,2),(1,3),(3,3),(2,4),(2,5),(5,4)],
         'start': (0,0),
         'goal': (5,5),
         'theta': 0
-        }'''
+        }
 
 env = gym.make('TurtleRobotEnv-v1_2', **setup)
 
 
 #####LABERINTOS 3X3 Y 4X4
-model = Sequential()
+'''model = Sequential()
 #Input is 1 observation vector, and the number of observations in that vector 
 model.add(Input(shape=(1,5)))  
 model.add(Flatten())
@@ -58,7 +58,7 @@ model.add(Flatten())
 model.add(Dense(12, activation='relu'))
 model.add(Dense(12, activation='relu'))
 #Output is the number of actions in the action space
-model.add(Dense(env.action_space.n, activation='linear'))
+model.add(Dense(env.action_space.n, activation='linear'))'''
 
 #####LABERINTOS 3X3 Y 4X4
 '''model = Sequential()
@@ -72,7 +72,7 @@ model.add(Dense(24, activation='relu'))
 model.add(Dense(env.action_space.n, activation='linear'))'''
 
 #Laberintos 5x5 y 6x6
-'''model = keras.Sequential()
+model = keras.Sequential()
 #Input is 1 observation vector, and the number of observations in that vector 
 model.add(Input(shape=(1,5)))  
 model.add(Flatten())
@@ -80,9 +80,9 @@ model.add(Flatten())
 model.add(Dense(48, activation='relu'))                             
 model.add(Dense(92, activation='relu'))
 model.add(Dense(48, activation='relu'))
-model.add(Dense(4, activation='linear')) '''
+model.add(Dense(4, activation='linear')) 
 
-model=keras.models.load_model('models/3x3comite_weights_12x2.h5',compile=False)
+model=keras.models.load_model('models/6x6distilled_weights_96-192-96_to_48-92-48.h5',compile=False)
 
 
 state=env.reset()
