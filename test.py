@@ -105,7 +105,7 @@ dqn.load_weights('models/5x5_turtle_weights_96-192-96.h5')
 f1=open('data/estados.txt','w')
 f2=open('data/predicciones.txt','w')
 contador=0
-for i in range(1):
+for i in range(500):
     state=env.reset()
     done=False
     print('ESTADO',state)
@@ -113,13 +113,13 @@ for i in range(1):
     while not done:
         action=dqn.forward(state)
         predicciones=dqn.compute_q_values(np.reshape(state,(1,5)))
-        #f1.write(str(state[0])+' '+str(state[1])+' '+str(state[2])+' '+str(state[3])+' '+str(state[4])+' '+'\n')
+        f1.write(str(state[0])+' '+str(state[1])+' '+str(state[2])+' '+str(state[3])+' '+str(state[4])+' '+'\n')
         #print(np.reshape(state,(1,5)))
         #print(predicciones)
-        #f2.write(str(predicciones[0])+' '+str(predicciones[1])+' '+str(predicciones[2])+' '+str(predicciones[3])+'\n')
+        f2.write(str(predicciones[0])+' '+str(predicciones[1])+' '+str(predicciones[2])+' '+str(predicciones[3])+'\n')
         #print(type(predicciones))
         new_state, reward, done, info = env.step(action)
-        env.render(action=action, reward=reward)
+        #env.render(action=action, reward=reward)
         state=new_state
         contador+=1
 print(contador)

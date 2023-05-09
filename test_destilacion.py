@@ -55,8 +55,8 @@ model = Sequential()
 model.add(Input(shape=(1,5)))  
 model.add(Flatten())
 #Hidden layers with 24 nodes each
-model.add(Dense(12, activation='relu'))
-model.add(Dense(12, activation='relu'))
+model.add(Dense(36, activation='relu'))
+model.add(Dense(36, activation='relu'))
 #Output is the number of actions in the action space
 model.add(Dense(env.action_space.n, activation='linear'))
 
@@ -82,7 +82,7 @@ model.add(Dense(92, activation='relu'))
 model.add(Dense(48, activation='relu'))
 model.add(Dense(4, activation='linear')) '''
 
-model=keras.models.load_model('models/5x5comite_weights_12x2.h5',compile=False)
+model=keras.models.load_model('models/5x5distilled_weights_12x2.h5',compile=False)
 
 
 state=env.reset()
