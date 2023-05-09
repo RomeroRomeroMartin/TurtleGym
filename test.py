@@ -29,21 +29,21 @@ from rl.agents.dqn import DQNAgent
         'theta': 0
         }'''
 #Laberinto 5x5
-'''setup = { 'width': 5,
+setup = { 'width': 5,
         'height': 5,
         'walls': [(1,1),(3,0),(2,2),(2,3),(3,1),(4,2)],
         'start': (0,0),
         'goal': (3,2),
         'theta': 0
-        } '''  
+        }   
 #Laberinto 6x6
-setup = { 'width': 6,
+'''setup = { 'width': 6,
         'height': 6,
         'walls': [(1,1),(0,5),(1,2),(1,3),(3,3),(2,4),(2,5),(5,4)],
         'start': (0,0),
         'goal': (5,5),
         'theta': 0
-        }
+        }'''
 
 env = gym.make('TurtleRobotEnv-v1_2', **setup)
 
@@ -98,7 +98,7 @@ dqn = DQNAgent(model=model,                     # Q-Network model
                policy=policy) 
 dqn.compile(tf.keras.optimizers.Adam(learning_rate=1e-3), metrics=['mae','accuracy'])
 
-dqn.load_weights('models/6x6_turtle_weights_96-192-96.h5')
+dqn.load_weights('models/5x5_turtle_weights_96-192-96.h5')
 
 
 

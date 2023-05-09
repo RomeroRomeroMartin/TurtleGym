@@ -120,13 +120,13 @@ list_qlear=[]
 list_dqn=[]
 
 #CREAMOS DQN
-modeldqn=create_dqn([96,192,96],'models/6x6_turtle_weights_96-192-96.h5').create_agent()
+modeldqn=create_dqn([96,192,96],'models/5x5_turtle_weights_96-192-96.h5').create_agent()
 list_dqn.append(modeldqn)
-modeldqn=create_dqn([96,192,96],'models/6x6_turtle_weights.h5').create_agent()
-list_dqn.append(modeldqn)
+#modeldqn=create_dqn([96,192,96],'models/6x6_turtle_weights.h5').create_agent()
+#list_dqn.append(modeldqn)
 
 #CREAMOS Q-LEARNING
-with open('models/Qlear6x6.pkl', 'rb') as f:
+with open('models/Qlear5x5.pkl', 'rb') as f:
     qlear = pickle.load(f)
 
 list_qlear.append(qlear)
