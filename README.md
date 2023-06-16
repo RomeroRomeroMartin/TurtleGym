@@ -1,4 +1,6 @@
-# PASOS A SEGUIR PARA LA EJECUCIÓN DEL CÓDIGO
+# APRENDIZAJE FEDERADO EN MÚLTIPLES ROBOTS CON ARQUITECTURA HETEROGÉNEA Y DESTILACIÓN DEL CONOCIMIENTO
+Trabajo de Fin de Grado realizado por Martín Romero Romero
+## PASOS A SEGUIR PARA LA EJECUCIÓN DEL CÓDIGO
 
 A continuación se describen los pasos necesarios para poder ejecutar el código proporcionado, a modo de "manual de usuario", para todas las personas que deseen replicar todo lo que se ha hehco en este trabajo o incluso continuar con la línea de investigación.
 
@@ -6,7 +8,7 @@ Todos los programas son programas python y se ejecutan de la siguiente manera:
 
 		python3 nombre_programa.py
 
-## Programas principales:
+### Programas principales:
 A continuación se explicarán las funcionalidades de cada programa:
 
 	- plotea.py: sirve para extraer las gráficas de evolución de los algoritmos Q-Learning y DQN. Los archivos .txt con la información necesaria para extraer las gráficas se encuentran en el directorio `data`. En el archivo README.md del directorio data se explica el contenido que hay dentro.
@@ -21,7 +23,7 @@ A continuación se explicarán las funcionalidades de cada programa:
 	- dqn_turtle.py y servidor.py: son programas que se utilizaron para el entrenamiento en el Turtlebot real.
 
 
-## Programas para crear el entorno de simulación gym
+### Programas para crear el entorno de simulación gym
 
 En el directorio `turtle_robot_gym` se encuentran los programas necesarios para la creación del entorno de simulación gym. Concretamente dentro del directorio `envs` existen varias versiones del entorno. Principalmente se han utilizado dos:
 
