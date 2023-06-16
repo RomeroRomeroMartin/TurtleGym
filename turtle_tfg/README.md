@@ -11,7 +11,7 @@ Por último, en la carpeta “src” se encentran los programas necesarios para 
 
     - train_dqn.py: este programa sirve para entrenar la DQN en el Turtlebot real. Además de este programa es necesario lanzar el programa `dqn_turtle.py` de la carpeta `1_CP_TurtleGym`. 
 
-    - dqn.py: este programa sirve para testear el modelo de DQN entrenado. Para lanzar este programa es necesario también lanzar el programa `servidor.py` de la carpeta `1_CP_TurtleGym`, que creará un servidor TCP con el Turtlebot para la comunicación entre ambos. 
+    - dqn.py: este programa sirve para testear el modelo de DQN entrenado. Para lanzar este programa es necesario también lanzar el programa `servidor.py`, que creará un servidor TCP con el Turtlebot para la comunicación entre ambos. 
 
     - turtlebot_communication.py: es un programa auxiliar para crear la comunicación entre Turtlebot y ordenador. 
 
