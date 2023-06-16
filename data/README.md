@@ -1,6 +1,6 @@
-#EXPLICACIÓN DE LOS DOCUMENTOS DEL DIRECTORIO
+# EXPLICACIÓN DE LOS DOCUMENTOS DEL DIRECTORIO
 
-##Archivos `.txt` para obtener las gráficas de evolución:
+## Archivos `.txt` para obtener las gráficas de evolución:
 Los archivos `.txt` para obtener las gráficas de evolución están nombrados de la siguiente manera: `XXXSimulacionesYYYZZZ.txt` o `XXXSimulacionesYYYZZZ_AAA.txt`, donde: 
 
     - XXX son el número de simulaciones (30 o 500). 
@@ -13,7 +13,7 @@ Los archivos `.txt` para obtener las gráficas de evolución están nombrados de
 
 Estas gráficas pueden obtenerse ejecutando el programa Python `plotea.py`, modificando los archivos de datos correspondientes en el programa. 
 
-##Archivos `.txt` para la destilación de las redes (tanto individuales como los ensembles):
+## Archivos `.txt` para la destilación de las redes (tanto individuales como los ensembles):
 
 Para cada modelo destilado existen dos archivos, uno con las entradas y otro con las salidas. Estos archivos tienen una forma del tipo “XXXYYYZZZ.txt” o “XXXYYYZZZ_AAA.txt” donde: 
 
