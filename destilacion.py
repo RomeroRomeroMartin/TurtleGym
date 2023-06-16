@@ -29,12 +29,12 @@ model = keras.Sequential()
 model.add(Input(shape=(1,5)))  
 model.add(Flatten())
 #Hidden layers with 24 nodes each
-model.add(Dense(36, activation='relu'))                             
-model.add(Dense(36, activation='relu'))
+model.add(Dense(12, activation='relu'))                             
+model.add(Dense(12, activation='relu'))
 model.add(Dense(4, activation='linear'))
 
-#Laberintos 5x5 y 6x6
-'''model = keras.Sequential()
+'''#Laberintos 5x5 y 6x6
+model = keras.Sequential()
 #Input is 1 observation vector, and the number of observations in that vector 
 model.add(Input(shape=(1,5)))  
 model.add(Flatten())
@@ -42,14 +42,14 @@ model.add(Flatten())
 model.add(Dense(24, activation='relu'))                             
 #model.add(Dense(92, activation='relu'))
 model.add(Dense(24, activation='relu'))
-model.add(Dense(4, activation='linear'))''' 
+model.add(Dense(4, activation='linear'))'''
 
 # Compile the distilled model with KL divergence loss
 model.compile(optimizer='adam', loss=Kulback_Leibler_loss)
 
 # Load the dataset of states and action probabilities
 estados=[]
-f1=open('data/Inputs.txt','r')
+f1=open('data/InputsDestilacionRealTurtle.txt','r')
 lineas=f1.readlines()
 for linea in lineas:
     l=np.array([])
@@ -67,7 +67,7 @@ estados=np.array(estados)
 f1.close()
 
 
-f2=open('data/Outputs.txt','r')
+f2=open('data/OutputsDestilacionRealTurtle.txt','r')
 predicciones=[]
 lineas=f2.readlines()
 for linea in lineas:
@@ -84,8 +84,10 @@ predicciones=np.array(predicciones)
 #print(predicciones)
 f2.close()
 
+
+
 # Train the distilled model on the dataset
 model.fit(estados, predicciones,verbose=1,epochs=500)
 
 # Save the distilled model weights
-model.save('models/5x5distilled_weights_12x2.h5')
+model.save('models/3x3distilled_RealTurtle_weights.h5')

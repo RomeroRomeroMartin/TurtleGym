@@ -14,13 +14,13 @@ import keras
 
 
 #Laberinto 3x3
-'''setup = { 'width': 3,
+setup = { 'width': 3,
         'height': 3,
         'walls': [(1,1),(0,2)],
         'start': (0,0),
         'goal': (1,2),
         'theta': 0
-        } '''
+        } 
 #Laberinto 4x4
 '''setup = { 'width': 4,
         'height': 4,
@@ -30,13 +30,13 @@ import keras
         'theta': 0
         }'''
 #Laberinto 5x5
-setup = { 'width': 5,
+'''setup = { 'width': 5,
         'height': 5,
         'walls': [(1,1),(3,0),(2,2),(2,3),(3,1),(4,2)],
         'start': (0,0),
         'goal': (3,2),
         'theta': 0
-        }
+        }'''
 #Laberinto 6x6
 '''setup = { 'width': 6,
         'height': 6,
@@ -55,13 +55,13 @@ model = Sequential()
 model.add(Input(shape=(1,5)))  
 model.add(Flatten())
 #Hidden layers with 24 nodes each
-model.add(Dense(36, activation='relu'))
-model.add(Dense(36, activation='relu'))
+model.add(Dense(12, activation='relu'))
+model.add(Dense(12, activation='relu'))
 #Output is the number of actions in the action space
 model.add(Dense(env.action_space.n, activation='linear'))
 
-#####LABERINTOS 3X3 Y 4X4
-'''model = Sequential()
+'''#####LABERINTOS 3X3 Y 4X4
+model = Sequential()
 #Input is 1 observation vector, and the number of observations in that vector 
 model.add(Input(shape=(1,5)))  
 model.add(Flatten())
@@ -82,7 +82,7 @@ model.add(Dense(92, activation='relu'))
 model.add(Dense(48, activation='relu'))
 model.add(Dense(4, activation='linear')) '''
 
-model=keras.models.load_model('models/5x5distilled_weights_12x2.h5',compile=False)
+model=keras.models.load_model('models/3x3distilled_RealTurtle_weights.h5',compile=False)
 
 
 state=env.reset()

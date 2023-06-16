@@ -24,21 +24,21 @@ import pickle
         'theta': 0
         }''' 
 #Laberinto 5x5
-setup = { 'width': 5,
+'''setup = { 'width': 5,
         'height': 5,
         'walls': [(1,1),(3,0),(2,2),(2,3),(3,1),(4,2)],
         'start': (0,0),
         'goal': (3,2),
         'theta': 0
-        } 
+        } '''
 #Laberinto 6x6
-'''setup = { 'width': 6,
+setup = { 'width': 6,
         'height': 6,
         'walls': [(1,1),(0,5),(1,2),(1,3),(3,3),(2,4),(2,5),(5,4)],
         'start': (0,0),
         'goal': (5,5),
-        'theta': 3
-        }'''
+        'theta': 0
+        }
 
 env = gym.make('TurtleRobotEnv-v1_2', **setup)
 
@@ -52,14 +52,15 @@ def choose_action(epsilon,state):
 
 for i in range(1):
     epsilon=1.0
-    Q = np.zeros([288, 3])
+    Q = np.zeros([400, 3])
     lr = 0.15
     y = 0.99
-    eps = 5500
+    eps = 20000
     visited_states=[]
     list_acciones=[]
     print(i)
     for i in range(eps):
+
         # initialize the environment
         s=env.reset()
         s = list(map(str, s))
@@ -69,18 +70,17 @@ for i in range(1):
         done = False
         n_acciones=0
         while not done:  
-
             # choose a random action
             #action = random.randint(0, 2)
             action=choose_action(epsilon,OldState)
-            
             # take the action and get the information from the environment
             new_state, reward, done, info = env.step(action)
             new_state = list(map(str, new_state))
             StrState=''.join(new_state)
+            
             if StrState not in visited_states: visited_states.append(StrState)
             NewState=visited_states.index(StrState)
-
+            
             #Update Q table
             Q[OldState,action] = Q[OldState,action] + lr*(reward + y*np.max(Q[NewState,:]) - Q[OldState,action])
 
@@ -91,8 +91,8 @@ for i in range(1):
         list_acciones.append(n_acciones)
         
         if done:
-            #epsilon=max(epsilon*0.97,0.01)
-            epsilon=epsilon*0.97
+            epsilon=max(epsilon*0.99,0.05)
+            #epsilon=epsilon*0.9999
 
     #f=open('data/AccionesQLeaning.txt','a')
     #f.write(str(list_acciones))
@@ -108,8 +108,8 @@ plt.show()'''
 print(Q[:len(visited_states),:])
 print(visited_states)
 data=[Q[:len(visited_states),:], visited_states]
-#with open('models/Qlear6x6.pkl', 'wb') as f:
-    #spickle.dump(data, f)
+with open('models/Qlear6x6.pkl', 'wb') as f:
+    pickle.dump(data, f)
 
 #Using Q table obtained after all episodes
 s=env.reset()
@@ -126,7 +126,7 @@ while not done:
     new_state, reward, done, info = env.step(action)
     new_state = list(map(str, new_state))
     StrState=''.join(new_state)
-    if StrState not in visited_states: visited_states.append(StrState)
+    #if StrState not in visited_states: visited_states.append(StrState)
     NewState=visited_states.index(StrState)
     OldState=NewState
     env.render(action=action, reward=reward)

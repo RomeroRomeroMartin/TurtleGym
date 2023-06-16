@@ -1,3 +1,5 @@
 from .turtle_robot_env_v0 import TurtleRobotEnv_v0
 from .turtle_robot_env_v1 import TurtleRobotEnv_v1
 from .turtle_robot_env_v1_2 import TurtleRobotEnv_v1_2
+from .turtle_robot_env_v1_3 import TurtleRobotEnv_v1_3
+from .turtle_robot_env_v1_4 import TurtleRobotEnv_v1_4
