@@ -13,16 +13,9 @@ laberinto='3x3'
 
 if laberinto=='3x3':
     #Laberinto 3x3
-    setup2 = { 'width': 3,
-            'height': 3,
-            'walls': [(1,1),(0,2)],
-            'start': (0,0),
-            'goal': (1,2),
-            'theta': 0
-            } 
     setup = { 'width': 3,
             'height': 3,
-            'walls': [(1,1),(2,0)],
+            'walls': [(1,1),(0,2)],
             'start': (0,0),
             'goal': (1,2),
             'theta': 0
@@ -122,4 +115,4 @@ for i in range(1):
     dqn.test(env, nb_episodes=20, visualize=False)
 
     # Save weights
-    model.save_weights('models/'+laberinto+'_turtle_weights.h5')
+    model.save_weights('models/'+laberinto+'_turtle_weights64x3_2.h5')
